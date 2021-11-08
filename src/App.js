@@ -4,7 +4,7 @@ import React, {
 import './app.css';
 import axios from 'axios'
 
-const API_PATH = 'http://localhost/suncare/src/api/feedback_ac.php';
+const API_PATH = 'http://suncare.localhost/api/feedback_ac.php';
 
 
 class App extends Component {
