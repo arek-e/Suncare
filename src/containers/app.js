@@ -6,6 +6,7 @@ import {
   } from "react-router-dom";
 import Home from './home';
 import Aboutus from './aboutus';
+import Login from './login';
 
 const App = () => {
     return(
@@ -14,6 +15,7 @@ const App = () => {
                 <Routes>
                     <Route exact path="/" element= {<Home />} />  
                     <Route path = "/aboutus" element = {<Aboutus/>}/>
+                    <Route path = "/login" element = {<Login/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
