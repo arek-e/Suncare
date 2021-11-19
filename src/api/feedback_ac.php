@@ -8,7 +8,9 @@ $servername = "utbweb.its.ltu.se";
 $username = "19991124";
 $password = "19991124";
 
+// Retrieve the contents of the php input request in the url
 $rest_json = file_get_contents("php://input");
+
 $_POST = json_decode($rest_json, true);
 
 // Create connection
@@ -26,6 +28,8 @@ values(
 '" . $_POST['email'] . "',
 '" . $_POST['feedback'] . "'
 )";
+
+// 
 $result = @mysqli_query($conn, $query);
 if ($result) {
     echo json_encode(["sent" => 1, ]);

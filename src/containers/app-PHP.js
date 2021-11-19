@@ -4,7 +4,7 @@ import React, {
 import './app.css';
 import axios from 'axios'
 
-const API_PATH = 'http://localhost/suncare/src/api/feedback_ac.php';
+const API_PATH = 'http://suncare.localhost/api/feedback_ac.php';
 
 
 class App extends Component {
@@ -71,7 +71,7 @@ class App extends Component {
                             placeholder="Enter your Email"
                             value={this.state.email}
                             onChange={e => this.setState({ email: e.target.value })}
-                            />
+                         />
                     </div>
                     <div className="inputstyle">
                         <textarea placeholder="Your message goes here"
