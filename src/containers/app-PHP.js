@@ -71,7 +71,7 @@ class App extends Component {
                             placeholder="Enter your Email"
                             value={this.state.email}
                             onChange={e => this.setState({ email: e.target.value })}
-                            />
+                         />
                     </div>
                     <div className="inputstyle">
                         <textarea placeholder="Your message goes here"

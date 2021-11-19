@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
-
-const API_PATH = 'http://suncare.localhost/api/db_connection.php';
 const axios = require('axios').default;
+const API_PATH = 'http://localhost/suncare/src/api/db_connection.php';
+
 
 class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
+            username: '',
             email: '',
-            message: '',
-            dataSent:''
+            password: '',
+            dataSent: false
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     onSubmit(event) {
         event.preventDefault();
+        console.log(this.state);
         axios({
             method: 'post',
             url: API_PATH,
@@ -26,6 +27,10 @@ class Login extends Component {
             data: this.state
         }).then(result => {
             console.log(result.data)
+            this.setState({
+                dataSent: result.data.sent
+            })
+            console.log(this.state)
         }).catch(error => this.setState({
             error: error.message
         }));
@@ -33,14 +38,28 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
-                <div className="btnstyle">
-                        <input type="submit"
-                            value = "Send"
-                            onClick={e => this.onSubmit(e)}
-                            />
+            <div>{ this.state.dataSent ?
+                <div>
+                    <p>Logging in</p>
                 </div>
-            </div>
+            :
+                <div className="btnstyle">
+                    <input type="text"
+                        placeholder="Enter Username"
+                        value={this.state.username}
+                        onChange={e => this.setState({ username: e.target.value })}
+                    />
+                    <input type="text"
+                        placeholder="Enter password"
+                        value={this.state.password}
+                        onChange={e => this.setState({ password: e.target.value })}
+                    />
+                    <input type="submit"
+                        value = "Send"
+                        onClick={e => this.onSubmit(e)}
+                    />
+                </div>
+            }</div>
         )
     }
 }
