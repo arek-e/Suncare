@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+
+
 const axios = require('axios').default;
-const API_PATH = 'http://localhost/suncare/src/api/db_connection.php';
+const API_PATH = 'http://localhost/suncare/src/api/login.php';
 
 
 class Login extends Component {
