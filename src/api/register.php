@@ -7,11 +7,12 @@ $rest_json = file_get_contents("php://input");
 
 $_POST = json_decode($rest_json, true);
 
-$query ="INSERT INTO `users` (`username`, `email`, `password`) 
+$query ="INSERT INTO `user` (`username`, `password`, `firstName`, `lastName`) 
 VALUES (
 '" . $_POST['firstName'] . "',
+'" . $_POST['password'] . "',
 '" . $_POST['email'] . "',
-'" . $_POST['password'] . "'
+
 )";
 
 // Send back a response for the frontend 

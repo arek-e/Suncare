@@ -21,7 +21,8 @@ else{
 
 function get_products($conn)
 {
-    $query = "SELECT * FROM `Products`";
+    // SQL Query statement
+    $query = "SELECT * FROM `product`"; 
     $result = @mysqli_query($conn, $query);
     
     $json = mysqli_fetch_all($result, MYSQLI_ASSOC);

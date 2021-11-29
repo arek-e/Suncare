@@ -3,12 +3,12 @@ import React from 'react'
 export default function ProductCard({ product }) {
     return (
         <div>
-            {product.name}
+            {product.pName}
             <br/>
-            {product.description}
+            {product.pDesc}
             <br/>
             {product.price +  " Kronor"}
-            <p>Hello</p>
+            <img src={ product.thumbnail } />
         </div>
     )
 }
