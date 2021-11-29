@@ -1,73 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 * {
 	font-family: 'Open Sans', sans-serif;
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
-}
+} */
+
 
 body {
-	background-color: #D7D1DB;
-}
-
-
-/*sets the container & its background image*/
-
-.container {
-	width: 700px;
-	height: 400px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-left: -350px;
-	margin-top: -200px;
-	/* background-image: url("Food-bg.jpg"); */
-    background-color: #1b1b1b;
-	background-position: center;
-	-webkit-box-shadow: 1px 3px 14px 4px rgba(163, 160, 163, 1);
-	-moz-box-shadow: 1px 3px 14px 4px rgba(163, 160, 163, 1);
-	box-shadow: 1px 3px 14px 4px rgba(163, 160, 163, 1);
-}
-
-.box {
-	width: 280px;
-	margin: 20px;
-}
-
-.grey {
-	color: #ccc;
-}
-
-.heading {
-	border-left: 4px solid #c0c334;
-	padding-left: 10px;
-	color: #ccc;
-}
-
-.inputstyle {
-	padding: 5px;
-	border-bottom: 1px solid #c0c334;
-	margin: 10px 0;
-}
-
-.btnstyle {
-	padding: 5px;
-	margin: 20px 0;
-	background-color: #c0c334;
-	border-radius: 5px;
-	color: #1b1b1b;
-}
-
-input,
-textarea {
-	width: 100%;
-	background: transparent;
-	border: none;
-	outline: none;
-	color: #ccc;
-}
-
-.msg {
-	color: #ccc;
-	font-size: 95%;
+	position: relative;
 }

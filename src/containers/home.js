@@ -1,10 +1,19 @@
 import React from 'react';
+// eslint-disable-next-line
+import styles from '../css/home.css'
+import InfoBox from '../components/infoBox';
+import Header from '../components/header';
 
 const Home = () => {
     return (
-        <div>
-            <h1>Welcome to Suncare</h1>
-            <p>This is home page</p>
+        <div className="backContainer">
+            <Header/>
+            <div className="roundRect"/>
+            <div className="sixtyContainer">
+                <InfoBox/>
+            </div>
+
+
         </div>
     );
 };
