@@ -1,6 +1,6 @@
 import React from 'react'
-// eslint-disable-next-line
 import {
+    // eslint-disable-next-line
     BrowserRouter as Router,
     Link
   } from "react-router-dom";
@@ -10,7 +10,7 @@ function ButtonProducts() {
     return (
          <>
             <div>
-                <button><Link to="/login">Go to Login</Link></button>
+                <button><Link to="/login">Register new account</Link></button>
             </div>
         </>
     )

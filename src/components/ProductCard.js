@@ -8,7 +8,7 @@ export default function ProductCard({ product }) {
             {product.pDesc}
             <br/>
             {product.price +  " Kronor"}
-            <img src={ product.thumbnail } />
+            <img src={ product.thumbnail } alt="Hej"/>
         </div>
     )
 }

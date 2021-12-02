@@ -23,7 +23,7 @@ export default function Products() {
             <p>Product listing</p>
             <Grid container>
                 {products.map(product => (
-                    <Grid item key={product.id} xs={12} md={6} lg={4}>
+                    <Grid item key={product.id} xs={100} md={1} lg={5}>
                         <ProductCard product={product}/>
                     </Grid>
                     ))}    
