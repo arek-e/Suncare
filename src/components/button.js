@@ -10,7 +10,7 @@ function ButtonProducts() {
     return (
          <>
             <div>
-                <button><Link to="/login">Register new account</Link></button>
+                <button><Link to="/user">Register new account</Link></button>
             </div>
         </>
     )

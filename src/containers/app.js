@@ -5,8 +5,8 @@ import {
     Route
   } from "react-router-dom";
 import Home from './home';
-import Aboutus from './aboutus';
-import Login from './login';
+import AboutUs from './aboutus';
+import UserPage from './user';
 import Products from './products';
 
 const App = () => {
@@ -15,8 +15,8 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element= {<Home />} />  
-                    <Route path = "/aboutus" element = {<Aboutus/>}/>
-                    <Route path = "/login" element = {<Login/>}/>
+                    <Route path = "/aboutus" element = {<AboutUs/>}/>
+                    <Route path = "/user" element = {<UserPage/>}/>
                     <Route path = "/products" element = {<Products/>}/>
                 </Routes>
             </BrowserRouter>
