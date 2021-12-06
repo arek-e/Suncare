@@ -1,8 +1,8 @@
 import React from 'react';
 // eslint-disable-next-line
 import styles from '../css/home.css'
-import InfoBox from '../components/infoBox';
-import Header from '../components/header';
+import InfoBox from '../components/InfoBox';
+import Header from '../components/Header';
 
 const Home = () => {
     return (
