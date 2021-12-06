@@ -1,7 +1,7 @@
 import React from 'react'
 // eslint-disable-next-line
 import styles from '../css/infoBox.css'
-import ButtonProducts from './button'
+import ButtonProducts from './Button'
 
 function InfoBox() {
     return (
