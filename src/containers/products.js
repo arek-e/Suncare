@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { Container, Grid, Box, Stack, Typography} from '@mui/material'
 import ProductCard from '../components/ProductCard'
 import CategoryList from '../components/CategoryList';
 import HeaderMUI from '../components/HeaderMUI';
 import css from '../css/products.css';
 import ShoppingCart from '../components/ShoppingCart';
-
+import { UserContext } from '../components/UserContext';
 const axios = require('axios').default;
 const API_PATH = 'http://localhost/suncare/src/api/products_func.php';
 

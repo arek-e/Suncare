@@ -2,21 +2,34 @@ import React from 'react'
 import {AppBar, Container, Toolbar, Typography, Box, IconButton, Menu, MenuItem, Button, Tooltip, Avatar, Slide} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useContext} from 'react'
+import { UserContext } from './UserContext';
 import {
     // eslint-disable-next-line
     BrowserRouter as Router,
     Link
   } from "react-router-dom";
-
+  const axios = require('axios').default;
+  const API_PATH = 'http://localhost/suncare/src/api/login.php'
 
 
 
 function HeaderMUI(props) {
+    const {account, setAccount} = useContext(UserContext)
+    const [loggedIn, setloggedIn] = useState(false)
+    useEffect(() => {
+        setAccount(account);
+        console.log("Account:", account);
+
+        return () => {
+            setloggedIn(true);
+        }
+    }, [account])
+
     const [anchorNav, setAnchorNav] = useState(null);
     const [anchorUser, setAnchorUser] = useState(null);
     const [openCart, setOpenCart] = useState(false);
-    
+
     const pages = [
         {id: 0, text: 'Home', link: '/'},
         {id: 1, text: 'Products', link: '/products'},
@@ -24,29 +37,20 @@ function HeaderMUI(props) {
         {id: 3, text: 'Contact', link: '/contact'}
     ];
 
-    const [loggedIn, setloggedIn] = useState(false)
+
     const loggedSettings = [
         {id: 0, text: 'Account', link: '/user'},
         {id: 1, text: 'Logout', link: '/'}
     ];
     const unloggedSettings = [
-        {id: 0, text: 'Login', link: '/login'},
+        {id: 0, text: 'Login', link: '/user'},
         {id: 1, text: 'Sign up', link: '/signup'}
     ];
-    const [account, setAccount] = useState({
-        email: '',
-        firstName: 'John',
-        lastName: 'Doe',
-    })
 
-    const handleAccount  = (event) => {
-
-    };
     const handleCart = () => {
         setOpenCart(!openCart);
         props.func(openCart);
     };
-
 
     const handleOpenNavMenu = (event) => {
       setAnchorNav(event.currentTarget);
@@ -150,18 +154,13 @@ function HeaderMUI(props) {
                                 <ShoppingCartIcon/>
                             </IconButton>
                         </Tooltip>
-                        {/* <Box anchorEl={openCart} onClose={handleCloseCart}>
-                            <Slide direction="left" in={Boolean(openCart)} keepMounted>
-                                <p>Hej</p>
-                            </Slide>
-                        </Box> */}
                     </Box>
 
                     <Box>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>      
-                                <Box>{ loggedIn ? 
-                                    <Avatar sx={{bgcolor: 'orange'}}>{account.firstName[0]} {account.lastName[0]} </Avatar>
+                                <Box>{ Boolean(account) ? 
+                                    <Avatar sx={{bgcolor: 'orange'}}>{String(account.firstName).charAt(0)} {String(account.lastName).charAt(0)} </Avatar>
                                 :
                                     <Avatar sx={{bgcolor: 'orange'}}></Avatar>
                                 }</Box>
@@ -183,7 +182,7 @@ function HeaderMUI(props) {
                             open={Boolean(anchorUser)}
                             onClose={handleCloseUserMenu}
                             >
-                            <Box>{ loggedIn ? 
+                            <Box>{ Boolean(account) ? 
                                 <Box>                            
                                     {loggedSettings.map((setting) => (
                                         <MenuItem key={setting.id} onClick={handleCloseNavMenu}>

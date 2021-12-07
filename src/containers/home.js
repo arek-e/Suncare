@@ -2,12 +2,12 @@ import React from 'react';
 // eslint-disable-next-line
 import styles from '../css/home.css'
 import InfoBox from '../components/InfoBox';
-import Header from '../components/Header';
+import HeaderMUI from '../components/HeaderMUI';
 
 const Home = () => {
     return (
         <div className="backContainer">
-            <Header/>
+            <HeaderMUI/>
             <div className="roundRect"/>
             <div className="sixtyContainer">
                 <InfoBox/>
