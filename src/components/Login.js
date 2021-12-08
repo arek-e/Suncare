@@ -1,21 +1,25 @@
+
+import { Box } from '@mui/system';
 import React from 'react'
-import {useState} from 'react'
+import {useState, useEffect, useContext, useMemo} from 'react'
 import {
     // eslint-disable-next-line
     BrowserRouter as Router,
     Link
   } from "react-router-dom";
+import HeaderMUI from './HeaderMUI';
+import { UserContext } from './UserContext';
 const axios = require('axios').default;
 const API_PATH = 'http://localhost/suncare/src/api/login.php'
 
+
 function Login() {
-    
+    const {account, setAccount} = useContext(UserContext);
+
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
-
-    const [dataSent, setDataSent] = useState(false);
 
     const [correcPwd, setCorrectPwd] = useState();
 
@@ -30,25 +34,15 @@ function Login() {
     const submitForm = event => {
         event.preventDefault();
 
-        axios.post(API_PATH, form).then(result => {
-            setDataSent(result.data.same);
-            // setCorrectPwd(result.data.same);
-            // if(!correcPwd){
-            //     console.log("Incorrect password!");
-            // }
-            // else{
-            //     console.log("correct password!")
-            // }
-        })
+        axios.post(API_PATH, {function: "login_user", form: form})
+        .then( res => {
+            setAccount(res.data.session); 
+        });
+
     };
 
-
     return (
-        <div>{ dataSent ?
-            <div>
-                <p>Congrats you are now logged in!</p>
-            </div>
-        :
+        <Box>
             <div>
                 <input type="text"
                         placeholder="Email"
@@ -70,7 +64,8 @@ function Login() {
                 <br/>
                 <button><Link to="/signup">Register new account</Link></button>
             </div>
-     }</div>
+        </Box>
+
     )
 }
 
