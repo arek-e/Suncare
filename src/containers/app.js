@@ -4,17 +4,19 @@ import {
     Routes,
     Route
   } from "react-router-dom";
-import {useState,useContext, useMemo} from 'react'
+import {useState, useMemo} from 'react'
 import Home from './home';
 import AboutUs from './aboutus';
 import UserPage from './user';
 import Products from './products';
 import Signup from './signup';
 import { UserContext } from '../components/UserContext';
+import ProductCardPage from '../components/ProductCardPage';
+
+
 
 const App = () => {
     const [account, setAccount] = useState(null);
-
     const value = useMemo(() => ({account, setAccount}), [account, setAccount]);
 
     return(
@@ -27,7 +29,7 @@ const App = () => {
                         <Route path = "/user" element = {<UserPage/>}/>
                         <Route path = "/products" element = {<Products/>}/>
                         <Route path = "/signup" element = {<Signup/>}/>
-
+                        <Route path="/products/item/:id" element={<ProductCardPage/>}/>
                     </Routes>
                 </BrowserRouter>
             </UserContext.Provider >

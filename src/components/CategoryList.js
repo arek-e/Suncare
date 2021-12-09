@@ -44,26 +44,29 @@ function CategoryList(props) {
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         {categories.map(category => (
-                            <ListItemButton  key={category.id} sx={{ pl: 4 }} onClick={(event) => handleCategoryClick(event, {category})}  >
-                                <ListItemText primary={category.name} />
-                            </ListItemButton>
+                            <Box>
+                                <ListItemButton  key={category.id} sx={{ pl: 4 }} onClick={(event) => handleCategoryClick(event, {category})}  >
+                                    <ListItemText primary={category.name} />
+                                </ListItemButton>
+                                <Divider variant="middle"/>
+                            </Box>
                         ))}  
                     </List>
                 </Collapse>
-
                 <ListItemButton
                     selected={selectedIndex === 1}
                     onClick={(event) => handleListItemClick(event, 1)}
                 >
                     <ListItemText primary="Tan" />
                 </ListItemButton>
+                <Divider />
                 <ListItemButton
                     selected={selectedIndex === 2}
                     onClick={(event) => handleListItemClick(event, 2)}
                 >
                     <ListItemText primary="Repair" />
                 </ListItemButton>
-
+                <Divider />
                 <ListItemButton
                     selected={selectedIndex === 3}
                     onClick={(event) => handleListItemClick(event, 3)}

@@ -12,7 +12,11 @@ if(isset($_POST['function']) && !empty($_POST['function'])){
     $functionCall = $_POST['function'];
     if(isset($_POST['catID'])){
         $catID = $_POST['catID'];
-    }
+    };
+    if(isset($_POST['prodID'])){
+        $productID = $_POST['prodID'];
+    };
+
 
     switch($functionCall) {
         case 'get_all_categories':
@@ -23,6 +27,9 @@ if(isset($_POST['function']) && !empty($_POST['function'])){
             break;
         case 'get_all_category_products':
             get_all_category_products($conn, $catID);
+            break;
+        case 'get_product':
+            get_product($conn, $productID);
             break;
     }
 }
@@ -63,13 +70,12 @@ function get_all_products($conn)
 }
 
 function get_product($conn, $productID){
-    $query = "SELECT * FROM `products` WHERE `products.id` = $productID";     
+    $query = "SELECT * FROM `products` WHERE `id` = $productID";     
     
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    return $row;
+    $result = mysqli_query($conn, $query);                  //RAW
+    $json = mysqli_fetch_assoc($result);        // products array
+    
+    echo json_encode($json);
 }
-
-
 
 ?>

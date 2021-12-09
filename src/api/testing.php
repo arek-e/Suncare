@@ -1,20 +1,20 @@
 <?php 
-  session_start();
-  header("Access-Control-Allow-Origin: http://localhost:3000"); // cannot be a wildcard, you have to specify the name of the domain making the request here.
-  header('Access-Control-Allow-Headers: Content-Type');
-  header("Access-Control-Allow-Credentials: true"); // add this header
+require_once 'db_connection.php';
 
-  if (isset($_GET['username'])) {
-     $_SESSION['username'] = $_GET['username'];
-     // echo  $_SESSION['username'];
-  }
+// Retrieve the contents of the php input request in the url
+$rest_json = file_get_contents("php://input");
+$_POST = json_decode($rest_json, true);
+$data = array();
 
-  if(!isset($_SESSION['username'])){
-     echo 'you are not logged in';
- } else {
-     echo 'you are logged in';
-     header('Content-type: application/json');
-     echo json_encode($_SESSION);
- }
+if(isset($_POST['prodID'])){
+    $productID = $_POST['prodID'];
+};
 
-  ?>
+$query = "SELECT * FROM `products` WHERE `products.id` = $productID";     
+    
+$result = mysqli_query($conn, $query);                  //RAW
+$json = mysqli_fetch_all($result, MYSQLI_ASSOC);        // products array
+
+$data['product'] = $json;                              // products array => Sub array in Data
+echo json_encode($data);
+?>

@@ -5,7 +5,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Slide, ButtonGroup, Collapse } from '@mui/material';
+import { CardActionArea, Slide, ButtonGroup, Collapse} from '@mui/material';
+import { Link } from "react-router-dom";
 
 export default function ProductCard({ product }) {
     const containerRef = React.useRef(null);
@@ -41,7 +42,7 @@ export default function ProductCard({ product }) {
                         <Slide direction="up" in={hovering} container={containerRef.current}>
                             <ButtonGroup size="fill" >
                                 <Button onClick={(event) => handleAddCartClick(event, product)}>Add to cart</Button>
-                                <Button>More details</Button>
+                                <Button><Link style={{ textDecoration: 'none', color: 'inherit'}} to={'/products/item/' + product.id} > More details</Link></Button>
                             </ButtonGroup>
                         </Slide>
                     </CardActions>

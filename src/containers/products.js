@@ -1,11 +1,16 @@
-import React, {useState, useEffect, useContext} from 'react'
-import { Container, Grid, Box, Stack, Typography} from '@mui/material'
+import React, {useState, useEffect} from 'react'
+import { Grid, Box, Stack, Typography} from '@mui/material'
+import { Link } from "react-router-dom";
+
+// Pages
 import ProductCard from '../components/ProductCard'
 import CategoryList from '../components/CategoryList';
 import HeaderMUI from '../components/HeaderMUI';
-import css from '../css/products.css';
 import ShoppingCart from '../components/ShoppingCart';
-import { UserContext } from '../components/UserContext';
+
+import styles from '../css/products.css'
+
+
 const axios = require('axios').default;
 const API_PATH = 'http://localhost/suncare/src/api/products_func.php';
 
@@ -20,6 +25,7 @@ export default function Products() {
     const pullCartStatus = (data) => { setCart(data) };
     const pullCategory = (data) => { setselectedCategory(data.category) };
     const pullCatIndex = (data) => { setcategoryIndex(data) };
+
 
     useEffect(() => {
         axios.post(API_PATH, {function: "get_all_categories"})
@@ -39,9 +45,7 @@ export default function Products() {
                 setProducts(res.data.products)
             });
         }
-        else{
 
-        }
     }, [categoryIndex])
 
     useEffect(() => {
@@ -58,7 +62,10 @@ export default function Products() {
 
 
     return (    
+
         <Grid container >
+
+            {products.map(product => (<Link key={product.id} to={'item/' + product.id} />))}
             <Grid item xs={12} sx={{ zIndex: 101}}>
                 <HeaderMUI func={pullCartStatus}/>
             </Grid>
@@ -82,16 +89,7 @@ export default function Products() {
                     </Grid>
                 </Stack>
             </Grid>
-            <Grid container sx={{ zIndex: 100 , position: 'fixed'}}>
-                <Grid item xs={12}>
-                    <Box sx={{height: 65}}></Box>
-                </Grid>
-                <Grid item md={9}>
-                </Grid>
-                <Grid item md={3}>
-                    <ShoppingCart cartStatus={cart}/>
-                </Grid>
-            </Grid>
+            <ShoppingCart cartStatus={cart}/>
         </Grid>
     )
 }

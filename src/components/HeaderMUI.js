@@ -1,5 +1,5 @@
 import React from 'react'
-import {AppBar, Container, Toolbar, Typography, Box, IconButton, Menu, MenuItem, Button, Tooltip, Avatar, Slide} from '@mui/material';
+import {AppBar, Container, Toolbar, Typography, Box, IconButton, Menu, MenuItem, Button, Tooltip, Avatar, Slide, Badge} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useEffect, useState, useContext} from 'react'
@@ -151,7 +151,9 @@ function HeaderMUI(props) {
                             onClick={handleCart}
                             color="inherit"
                             >      
-                                <ShoppingCartIcon/>
+                                <Badge color="secondary" badgeContent={2} >
+                                    <ShoppingCartIcon/>
+                                </Badge>
                             </IconButton>
                         </Tooltip>
                     </Box>
