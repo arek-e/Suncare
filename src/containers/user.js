@@ -1,38 +1,44 @@
 import React, {useState, useContext, useEffect } from 'react'
+import Dashboard from '../components/Admin-Dashboard/Dashboard';
 import HeaderMUI from '../components/HeaderMUI';
 import Login from '../components/Login';
 import { UserContext } from '../components/UserContext';
+
 function UserPage() {
-    // const [accountStatus, setAccountStatus] = useState(false)
-    // const pullAccountStatus = (data) => { 
-    //     console.log(accountStatus);
-    //     setAccountStatus(Boolean(data)) 
-    // };
-
-
     const {account, setAccount} = useContext(UserContext)
     const [loggedIn, setloggedIn] = useState(false)
+    const [admin, setAdmin] = useState(0)
+
     useEffect(() => {
         setAccount(account);
-        console.log("Account:", account);
+        const admin =  new Object(account);
+        isAdmin(admin);
 
-        return () => {
-            setloggedIn(true);
-        }
     }, [account])
+
+    const isAdmin = (data) => {
+        let flag = parseInt(data.adminFlag)
+        console.log("Account from isAdmin:", flag);
+        setAdmin(flag);
+    }
+    
+
     return (
         <div>
-            <HeaderMUI/>
-            {Boolean(account) ?  
-            <div>
-                <p>{account.userid}</p><br/>
-                <p>{account.email}</p><br/>
-                <p>{account.firstName}</p><p>{account.lastName}</p><br/>
-                <p>{account.phoneNum}</p><br/>
-                <p>{account.created}</p><br/>
-                <p>{account.adminFlag}</p><br/>
-            </div>
-            : <Login/>  }
+            {Boolean(account) ?
+                <div>
+                    {Boolean(admin) ? 
+                            <div>
+                                <Dashboard/>
+                            </div>
+                        :
+                            <div>
+                                <HeaderMUI/> 
+                            </div>
+                    }
+                </div>
+            : 
+                <Login/>  }
         </div>
     )
 }

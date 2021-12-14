@@ -10,24 +10,25 @@ $_POST = json_decode($content, true);
 //     echo("Error description: " . $conn -> error);
 //   }
 
-$query = "INSERT INTO `users`(`email`, `password`, `first_name`, `last_name`, `phone_number`, `adminFlag`) 
-VALUES (
-    '". $_POST['email'] ."',
-    '". $_POST['password'] ."',
-    '". $_POST['firstName'] ."',
-    '". $_POST['lastName'] ."',
-    '". $_POST['phoneNumber'] ."',
-    0
-)";
-
-$result = @mysqli_query($conn, $query);
-
-if($result){
-    echo json_encode(array("sent" => true));
+if(isset($_POST)){
+    $query = "INSERT INTO `users`(`email`, `password`, `first_name`, `last_name`, `phone_number`, `adminFlag`) 
+    VALUES (
+        '". $_POST['email'] ."',
+        '". $_POST['password'] ."',
+        '". $_POST['firstName'] ."',
+        '". $_POST['lastName'] ."',
+        '". $_POST['phoneNumber'] ."',
+        0
+    )";
+    
+    $result = @mysqli_query($conn, $query);
+    
+    if($result){
+        echo json_encode(array("sent" => true));
+    }
+    else{
+        echo json_encode(array("sent" => false));
+    };
 }
-else{
-    echo json_encode(array("sent" => false));
-};
-
 
 ?>

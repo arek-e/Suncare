@@ -4,11 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useEffect, useState, useContext} from 'react'
 import { UserContext } from './UserContext';
-import {
-    // eslint-disable-next-line
-    BrowserRouter as Router,
-    Link
-  } from "react-router-dom";
+import { Link } from "react-router-dom";
   const axios = require('axios').default;
   const API_PATH = 'http://localhost/suncare/src/api/login.php'
 
