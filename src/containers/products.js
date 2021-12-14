@@ -18,13 +18,14 @@ export default function Products() {
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
     const [cart, setCart] = useState(true)
-
     const [selectedCategory, setselectedCategory] = useState({id: 0, name: 'All products', desc: 'All products shop here'})
     const [categoryIndex, setcategoryIndex] = useState(3)
+    const [product, setProduct] = useState({}) 
 
     const pullCartStatus = (data) => { setCart(data) };
     const pullCategory = (data) => { setselectedCategory(data.category) };
     const pullCatIndex = (data) => { setcategoryIndex(data) };
+    const pullProduct = (data) => { setProduct(data) };
 
 
     useEffect(() => {
@@ -83,13 +84,13 @@ export default function Products() {
                     <Grid container spacing={3}>
                         {products.map(product => (
                             <Grid item key={product.id} xs={12} sm={12} md="auto">
-                                <ProductCard product={product}/>
+                                <ProductCard func={pullProduct} product={product}/>
                             </Grid>
                         ))}    
                     </Grid>
                 </Stack>
             </Grid>
-            <ShoppingCart cartStatus={cart}/>
+            <ShoppingCart cartStatuconsts={cart}/>
         </Grid>
     )
 }

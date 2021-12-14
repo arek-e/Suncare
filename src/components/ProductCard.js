@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea, Slide, ButtonGroup, Collapse} from '@mui/material';
 import { Link } from "react-router-dom";
 
-export default function ProductCard({ product }) {
+export default function ProductCard( props ) {
     const containerRef = React.useRef(null);
 
     const [hovering, setHovering] = React.useState(false);
@@ -16,33 +16,34 @@ export default function ProductCard({ product }) {
         setHovering((prev) => !prev);
     };
     const handleAddCartClick = (event, addProduct) => {
-        console.log(addProduct);
+
+        props.func(addProduct);
     };
 
     return (
-        <Card onMouseEnter={handleHover} onMouseLeave={handleHover} sx={{ maxWidth: 300, minWidth:300,}}>
+        <Card onMouseEnter={handleHover} onMouseLeave={handleHover} sx={{ maxWidth: 300, minWidth:300}}>
             <CardActionArea >
                 <CardMedia
                     component="img"
                     height="370"
-                    image={product.thumbnail}
+                    image={props.product.thumbnail}
                     alt="product image"
                 />
             </CardActionArea>
             <CardContent ref={containerRef} sx={{ overflow: 'hidden' }}>
                 <Typography gutterBottom variant="h10" component="div">
-                {product.name}
+                {props.product.name}
                 </Typography>
                 <Typography variant="body2">
-                {product.price + " kronor"}
+                {props.product.price + " kronor"}
                 </Typography>
 
                 <Collapse in={hovering}>
                     <CardActions>     
                         <Slide direction="up" in={hovering} container={containerRef.current}>
                             <ButtonGroup size="fill" >
-                                <Button onClick={(event) => handleAddCartClick(event, product)}>Add to cart</Button>
-                                <Button><Link style={{ textDecoration: 'none', color: 'inherit'}} to={'/products/item/' + product.id} > More details</Link></Button>
+                                <Button onClick={(event) => handleAddCartClick(event, props.product)}>Add to cart</Button>
+                                <Button><Link style={{ textDecoration: 'none', color: 'inherit'}} to={'/products/item/' + props.product.id} > More details</Link></Button>
                             </ButtonGroup>
                         </Slide>
                     </CardActions>

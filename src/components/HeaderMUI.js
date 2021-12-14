@@ -33,7 +33,6 @@ function HeaderMUI(props) {
         {id: 3, text: 'Contact', link: '/contact'}
     ];
 
-
     const loggedSettings = [
         {id: 0, text: 'Account', link: '/user'},
         {id: 1, text: 'Logout', link: '/'}
