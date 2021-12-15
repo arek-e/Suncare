@@ -6,7 +6,6 @@ import { UserContext } from '../components/UserContext';
 
 function UserPage() {
     const {account, setAccount} = useContext(UserContext)
-    const [loggedIn, setloggedIn] = useState(false)
     const [admin, setAdmin] = useState(0)
 
     useEffect(() => {

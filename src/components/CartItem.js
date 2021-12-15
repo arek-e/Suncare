@@ -1,21 +1,20 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardMedia, Typography, Box, IconButton, ListItem, Grid, Stack } from '@mui/material'
 import { Add, Remove } from '@mui/icons-material';
 
 function CartItem(props) {
-    const [item, setItem] = useState({
-        name: '',
-        price: 0,
-        amount: 1,
-    })
+
+    useEffect(() => {
+        console.log(props.item)
+
+    }, [props.item])
     return (
-        <ListItem>
             <Card sx={{ display: 'flex' , width: 450 , height: 100}}>
                 <CardMedia
                 component="img"
                 sx={{width: 100, height:100}}
-                image='http://localhost/suncare/src/images/body/Malibu-Clear-All-Day-Protection.jpg'
+                image= {props.item.product.thumbnail}
                 alt="product image"
                 />
                 <CardContent>
@@ -41,7 +40,6 @@ function CartItem(props) {
                 </Box>
 
             </Card>
-        </ListItem>
     )
 }
 

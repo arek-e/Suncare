@@ -15,8 +15,6 @@ function HeaderMUI(props) {
     const [loggedIn, setloggedIn] = useState(false)
     useEffect(() => {
         setAccount(account);
-        console.log("Account:", account);
-
         return () => {
             setloggedIn(true);
         }

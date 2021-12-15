@@ -16,6 +16,18 @@ if(isset($_POST['function']) && !empty($_POST['function'])){
     if(isset($_POST['prodID'])){
         $productID = $_POST['prodID'];
     };
+    if(isset($_POST['userID'])){
+        $userID = $_POST['userID'];
+    }
+    if(isset($_POST['item'])){
+        $item = $_POST['item'];
+    }
+    if(isset($_POST['price'])){
+        $price = $_POST['price'];
+    }
+    if(isset($_POST['amount'])){
+        $amount = $_POST['amount'];
+    }
 
 
     switch($functionCall) {
@@ -30,6 +42,15 @@ if(isset($_POST['function']) && !empty($_POST['function'])){
             break;
         case 'get_product':
             get_product($conn, $productID);
+            break;
+        case 'get_cart':
+            get_cart($conn, $userID);
+            break;
+        case 'add_to_cart':
+            add_to_cart($conn, $userID, $item, $price, $amount);
+            break;
+        case 'update_cart':
+            update_cart($conn, $userID, $item, $price, $amount);
             break;
     }
 }
@@ -76,6 +97,41 @@ function get_product($conn, $productID){
     $json = mysqli_fetch_assoc($result);        // products array
     
     echo json_encode($json);
+}
+
+function get_cart($conn, $userID){
+    // SQL Query statement
+    $query = "SELECT `amount`,`products_id` FROM `cart` WHERE `users_id` = $userID"; 
+    $result = mysqli_query($conn, $query);                  //RAW
+    $json = mysqli_fetch_all($result, MYSQLI_ASSOC);        // products array
+    
+    $data['cart'] = $json;                              // products array => Sub array in Data
+    echo json_encode($data);
+}
+
+function add_to_cart($conn, $userID, $item, $price, $amount){
+    $query = "INSERT INTO `cart`(`price`, `amount`, `products_id`, `users_id`) VALUES ($price,$amount,$item,$userID)";
+    $result = @mysqli_query($conn, $query);
+    
+    if($result){
+        echo json_encode(array("sent" => true));
+    }
+    else{
+        echo json_encode(array("sent" => false));
+    };
+}
+
+function update_cart($conn, $userID, $item, $price, $amount){
+    $query = "UPDATE `cart` SET `amount`= $amount WHERE `products_id`= $item AND `users_id` = $userID";
+
+    $result = @mysqli_query($conn, $query);
+    
+    if($result){
+        echo json_encode(array("sent" => true));
+    }
+    else{
+        echo json_encode(array("sent" => false));
+    };
 }
 
 ?>
