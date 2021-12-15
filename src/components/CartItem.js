@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Card, CardContent, CardMedia, Typography, Box, IconButton, ListItem, Grid, Stack } from '@mui/material'
 import { Add, Remove } from '@mui/icons-material';
 
-function CartItem() {
+function CartItem(props) {
     const [item, setItem] = useState({
         name: '',
         price: 0,
@@ -20,10 +20,10 @@ function CartItem() {
                 />
                 <CardContent>
                     <Typography variant="subtitle2">
-                        Malibu Clear All Day Protection Spray SPF 50 250ml
+                        {props.item.product.name}
                     </Typography>
                     <Typography>
-                        70 kr
+                        {props.item.product.price}
                     </Typography>
                 </CardContent>
                 <Box sx={{paddingTop: 4}}>
@@ -32,7 +32,7 @@ function CartItem() {
                             <Add/>
                         </IconButton>
                         <Box sx={{paddingTop: 1}}>                        
-                            <Typography>1</Typography>
+                            <Typography>{props.item.quantity}</Typography>
                         </Box>
                         <IconButton>
                             <Remove/>

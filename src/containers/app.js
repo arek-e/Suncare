@@ -1,4 +1,5 @@
 import React from 'react';
+// Import react router dom component
 import {
     BrowserRouter,
     Routes,
@@ -22,6 +23,7 @@ const App = () => {
     return(
         <div>
             <UserContext.Provider value={value}>
+                {/* Define all the routes for the website */}
                 <BrowserRouter>
                     <Routes>
                         <Route exact path="/" element= {<Home />} />  
@@ -29,6 +31,7 @@ const App = () => {
                         <Route path = "/user" element = {<UserPage/>}/>
                         <Route path = "/products" element = {<Products/>}/>
                         <Route path = "/signup" element = {<Signup/>}/>
+                        {/* Dynamic route based on the id of a product */}
                         <Route path="/products/item/:id" element={<ProductCardPage/>}/>
                     </Routes>
                 </BrowserRouter>

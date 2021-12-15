@@ -16,7 +16,6 @@ export default function ProductCard( props ) {
         setHovering((prev) => !prev);
     };
     const handleAddCartClick = (event, addProduct) => {
-
         props.func(addProduct);
     };
 

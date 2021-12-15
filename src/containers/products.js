@@ -20,12 +20,12 @@ export default function Products() {
     const [cart, setCart] = useState(true)
     const [selectedCategory, setselectedCategory] = useState({id: 0, name: 'All products', desc: 'All products shop here'})
     const [categoryIndex, setcategoryIndex] = useState(3)
-    const [product, setProduct] = useState({}) 
+    const [cartProduct, setCartProduct] = useState({}) 
 
     const pullCartStatus = (data) => { setCart(data) };
     const pullCategory = (data) => { setselectedCategory(data.category) };
     const pullCatIndex = (data) => { setcategoryIndex(data) };
-    const pullProduct = (data) => { setProduct(data) };
+    const pullProduct = (data) => { setCartProduct(data) };
 
 
     useEffect(() => {
@@ -90,7 +90,7 @@ export default function Products() {
                     </Grid>
                 </Stack>
             </Grid>
-            <ShoppingCart cartStatuconsts={cart}/>
+            <ShoppingCart cartProduct={cartProduct} cartStatus={cart}/>
         </Grid>
     )
 }
