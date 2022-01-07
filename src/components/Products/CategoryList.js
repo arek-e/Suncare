@@ -44,8 +44,8 @@ function CategoryList(props) {
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         {categories.map(category => (
-                            <Box>
-                                <ListItemButton  key={category.id} sx={{ pl: 4 }} onClick={(event) => handleCategoryClick(event, {category})}  >
+                            <Box key={category.id}>
+                                <ListItemButton   sx={{ pl: 4 }} onClick={(event) => handleCategoryClick(event, {category})}  >
                                     <ListItemText primary={category.name} />
                                 </ListItemButton>
                                 <Divider variant="middle"/>

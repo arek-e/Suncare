@@ -1,5 +1,6 @@
 <?php 
 require_once 'db_connection.php';
+$conn = startConnection();
 
 // Retrieve the contents of the php input request in the url
 $rest_json = file_get_contents("php://input");

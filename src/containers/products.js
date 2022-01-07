@@ -3,10 +3,10 @@ import { Grid, Box, Stack, Typography} from '@mui/material'
 import { Link } from "react-router-dom";
 
 // Pages
-import ProductCard from '../components/ProductCard'
-import CategoryList from '../components/CategoryList';
+import ProductCard from '../components/Products/ProductCard'
+import CategoryList from '../components/Products/CategoryList';
 import HeaderMUI from '../components/HeaderMUI';
-import ShoppingCart from '../components/ShoppingCart';
+import ShoppingCart from '../components/Products/ShoppingCart';
 
 import styles from '../css/products.css'
 
@@ -38,7 +38,7 @@ export default function Products() {
 
     useEffect(() => {
         //console.log("Category index",categoryIndex);
-        if(categoryIndex == 3){
+        if(categoryIndex === 3){
             setselectedCategory({id: 0, name: 'All products', desc: 'All products shop here'})
             axios.post(API_PATH, {function: "get_all_products"})
             .then( res => {
@@ -50,7 +50,7 @@ export default function Products() {
     }, [categoryIndex])
 
     useEffect(() => {
-        if(selectedCategory.id != 0){
+        if(selectedCategory.id !== 0){
             axios.post(API_PATH, {function: "get_all_category_products", catID: selectedCategory.id})
             .then( res => {
                 console.log("Category: ", selectedCategory.name, res.data.categoryProducts)
@@ -68,7 +68,7 @@ export default function Products() {
 
             {products.map(product => (<Link key={product.id} to={'item/' + product.id} />))}
             <Grid item xs={12} sx={{ zIndex: 101}}>
-                <HeaderMUI func={pullCartStatus}/>
+                <HeaderMUI showCart={true} func={pullCartStatus}/>
             </Grid>
             <Grid item xs="auto">
                 <Box>

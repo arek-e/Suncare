@@ -1,23 +1,23 @@
 import React from 'react'
-import {AppBar, Container, Toolbar, Typography, Box, IconButton, Menu, MenuItem, Button, Tooltip, Avatar, Slide, Badge} from '@mui/material';
+import {AppBar, Toolbar, Typography, Box, IconButton, Menu, MenuItem, Button, Tooltip, Avatar, Badge} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useEffect, useState, useContext} from 'react'
 import { UserContext } from './UserContext';
 import { Link } from "react-router-dom";
-  const axios = require('axios').default;
-  const API_PATH = 'http://localhost/suncare/src/api/login.php'
+import CartItem from './Products/CartItem';
 
+const axios = require('axios').default;
+const API_PATH = 'http://localhost/suncare/src/api/products_func.php';
 
 
 function HeaderMUI(props) {
     const {account, setAccount} = useContext(UserContext)
-    const [loggedIn, setloggedIn] = useState(false)
+
+    let showCart = props.showCart
+
     useEffect(() => {
         setAccount(account);
-        return () => {
-            setloggedIn(true);
-        }
     }, [account])
 
     const [anchorNav, setAnchorNav] = useState(null);
@@ -58,6 +58,48 @@ function HeaderMUI(props) {
     const handleCloseUserMenu = () => {
       setAnchorUser(null);
     };
+
+    const handleLogout = (event, selectedLink) => {
+        if(selectedLink === 'Logout'){
+            setAccount(null)
+        }
+    }
+
+    const [cartItems, setCartItems] = useState([]);
+    const [cartItemsCount, setCartCount] = useState(0)
+    useEffect(() => {
+        if(account){
+            let userID = parseInt(account.userid)
+            axios.post(API_PATH, {function: "get_cart", userID: userID})
+            .then( res => {
+                console.log("Getting cart");
+                res.data.cart.map(item => (
+                    axios.post(API_PATH, {function: "get_product", prodID: item.products_id})
+                    .then( res2 => {
+                        setCartItems(prevarray => [...prevarray, {product: res2.data, quantity: parseInt(item.amount)}])
+                    })
+                ))
+            });
+        }
+    }, [account])
+
+    useEffect(() => {
+        console.log("Cart item count")
+        return calculateAmountInCart()
+    }, [cartItems])
+
+    const calculateAmountInCart = () => {
+        //console.log("List length: ", reviews.length)
+        if(cartItems.length > 0)
+        {
+            const cartItemCounts = cartItems.map((cartItem) => parseInt(cartItem.quantity))
+            
+            const cartCount = cartItemCounts.reduce((partial_rating, a) => partial_rating + a, 0);
+            console.log(cartItemCounts)
+            console.log(cartCount)
+            setCartCount(cartCount)
+        }
+    }
     return (
         <AppBar position="static">
             <Box>
@@ -133,23 +175,30 @@ function HeaderMUI(props) {
                         </Button>
                         ))}
                     </Box>
+                    
+                    {showCart ? 
+                        <Box>
+                            <Tooltip title="Open Cart">
+                                <IconButton                             
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleCart}
+                                color="inherit"
+                                >  
+                                    <Badge color='primary' badgeContent={cartItemsCount} >
+                                        <ShoppingCartIcon/>
+                                    </Badge>
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
+                    : 
+                        <Box>
 
-                    <Box>
-                        <Tooltip title="Open Cart">
-                            <IconButton                             
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleCart}
-                            color="inherit"
-                            >      
-                                <Badge color="secondary" badgeContent={2} >
-                                    <ShoppingCartIcon/>
-                                </Badge>
-                            </IconButton>
-                        </Tooltip>
-                    </Box>
+                        </Box>
+                    }
+                    
 
                     <Box>
                         <Tooltip title="Open settings">
@@ -182,7 +231,7 @@ function HeaderMUI(props) {
                                     {loggedSettings.map((setting) => (
                                         <MenuItem key={setting.id} onClick={handleCloseNavMenu}>
                                             <Typography textAlign="center">                                              
-                                                <Link to={setting.link} style={{ textDecoration: 'none', color: 'inherit'}}>
+                                                <Link to={setting.link} onClick={(event) => handleLogout(event, setting.text)} style={{ textDecoration: 'none', color: 'inherit'}}>
                                                     {setting.text}
                                                 </Link>
                                             </Typography>

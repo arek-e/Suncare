@@ -1,29 +1,14 @@
 import React from 'react'
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import {  Badge, Box, Container, Divider, Grid, IconButton, List, Toolbar, Typography, Paper } from '@mui/material';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { ChevronLeft, Menu, Notifications } from '@mui/icons-material';
 import MuiAppBar from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
 import { mainListItems, secondaryListItems } from './ListItems';
-import HeaderMUI from '../HeaderMUI';
-
-
-
-function Copyright(props) {
-    return (
-
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" to="/">
-            Suncare
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-        </Typography>
-    );
-}
+import HeaderMUI from '../../HeaderMUI';
+import Copyright from '../../Copyright';
 
 const drawerWidth = 240;
 
@@ -83,36 +68,6 @@ function DashboardContent() {
         <ThemeProvider theme={mdTheme}>
             <HeaderMUI position="absolute" open={open}/>
             <Box sx={{ display: 'flex' }}>
-                {/* <AppBar position="absolute" open={open}>
-                    <Toolbar sx={{ pr: '24px'}}>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={toggleDrawer}
-                            sx={{ 
-                                marginRight: '36px',
-                                ...(open && {display: 'none'})
-                            }}
-                        >
-                            <Menu/>
-                        </IconButton>
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            color="inherit"
-                            noWrap
-                            sx={{ flexGrow: 1}}
-                        >
-                            Dashboard
-                        </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <Notifications/>
-                            </Badge>
-                        </IconButton>
-                    </Toolbar>
-                </AppBar> */}
                 <Drawer variant="permanent" open={open}>
                     { open ? 
                         <Toolbar
@@ -149,7 +104,6 @@ function DashboardContent() {
                     <Divider/>
                     <List>{mainListItems}</List>
                     <Divider/>
-                    <List>{secondaryListItems}</List>
                 </Drawer>
                 <Box
                     component="main"
@@ -165,39 +119,7 @@ function DashboardContent() {
                 >
                     <Toolbar/>
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4}}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={4} lg={3}>
-                                <Paper
-                                    sx={{
-                                        p: 2,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        height: 240,
-                                    }}
-                                >
-                                    
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12} md={4} lg={3}>
-                                <Paper
-                                    sx={{
-                                        p: 2,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        height: 240,
-                                    }}
-                                >
-                                    
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                                
-                                </Paper>
-                            </Grid>
-
-                        </Grid>
-                        <Copyright sx={{ pt: 4 }} />
+                        <Outlet/>
                     </Container>
                 </Box>
             </Box>

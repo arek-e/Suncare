@@ -1,9 +1,9 @@
 import React from 'react'
 import {useState, useEffect, useContext} from 'react'
-import {Container, Box, Slide, List, ListItem, ListItemIcon, Typography, Card, Grid} from '@mui/material'
+import {Box, Slide, List, ListItem, Card, Grid, Button} from '@mui/material'
 import CartItem from './CartItem';
-import { UserContext } from './UserContext';
-
+import { UserContext } from '../UserContext';
+import { Link } from "react-router-dom";
 
 const axios = require('axios').default;
 const API_PATH = 'http://localhost/suncare/src/api/products_func.php'
@@ -12,14 +12,13 @@ const API_PATH = 'http://localhost/suncare/src/api/products_func.php'
 function ShoppingCart(props) {
 
     const {account, setAccount} = useContext(UserContext)
-    let acc = account;
     // Array that stores the items in the cart
     //const [cartItems, setCartItems] = useState();
     const [myArray, setmyArray] = useState([]);
 
     useEffect(() => {
-        if(acc){
-            let userID = parseInt(acc.userid)
+        if(account){
+            let userID = parseInt(account.userid)
             axios.post(API_PATH, {function: "get_cart",userID: userID})
             .then( res => {
                 console.log("Getting cart");
@@ -43,11 +42,11 @@ function ShoppingCart(props) {
     const  addToCart = (cartItem) => {
 
         
-        if(acc){
-            let userID = parseInt(acc.userid)
-            const objIndex = myArray.findIndex((obj => obj.product.id == cartItem.id));
+        if(account){
+            let userID = parseInt(account.userid)
+            const objIndex = myArray.findIndex((obj => obj.product.id === cartItem.id));
             // Only if the item is found aka object index is not -1, we increase its quantity
-            if(objIndex != -1){
+            if(objIndex !== -1){
                 myArray[objIndex].quantity += 1;
                 setmyArray(prevarray => [...prevarray])
                 axios.post(API_PATH, {
@@ -76,19 +75,16 @@ function ShoppingCart(props) {
         }else{
             console.log("Log in first to add to cart")
         }
-        console.log(myArray)
     }
 
     
 
     return (
-        <Grid container sx={{ zIndex: 100 , position: 'absolute'}}>
+        <Grid container sx={{ zIndex: 100 , position: 'absolute' , justifyContent: 'flex-end'}}>
             <Grid item xs={12}> 
                 <Box sx={{height: 65}}></Box>
             </Grid>
-            <Grid item md={9}>
-            </Grid>
-            <Grid item md={3}>
+            <Grid container item md={3} sx={{ justifyContent: 'flex-end'}}>
                 <Slide direction="down" in={Boolean(!props.cartStatus)} mountOnEnter unmountOnExit>
                     <Card>
                         <List>
@@ -98,6 +94,14 @@ function ShoppingCart(props) {
                                 </ListItem>
                             ))}
                         </List>
+                        <Grid container item md={12} sx={{ justifyContent: 'center'}}>
+                            <Button variant="contained">Clear cart</Button>
+                            <Button variant="contained">  
+                                <Link to="/checkout" style={{ textDecoration: 'none', color: 'inherit'}}>
+                                    Checkout
+                                </Link>
+                            </Button>
+                        </Grid>
                     </Card>
                 </Slide>
             </Grid>

@@ -4,22 +4,10 @@ import {useState} from 'react'
 import { Link } from "react-router-dom";
 import { LockOutlined } from '@mui/icons-material';
 import { Box, Avatar, Container, Grid, TextField, Typography, Button } from '@mui/material';
+import Copyright from '../Copyright';
 
 const axios = require('axios').default;
 const API_PATH = 'http://localhost/suncare/src/api/signup.php'
-
-function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" to="/">
-          Suncare
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
 
 function SignUp() {
     //Stores the signUp data
@@ -33,7 +21,7 @@ function SignUp() {
 
     const [dataSent, setDataSent] = useState(false);
 
-    const updateForm = event => {
+    const updateForm = (event) => {
         setForm({
             ...form,    //... sends the value with
             [event.target.name]: event.target.value
@@ -53,6 +41,7 @@ function SignUp() {
         <div>{ dataSent ?
             <div>
                 <p>Congrats you are now registered!</p>
+                <Button variant="contained"><Link style={{ textDecoration: 'none', color: 'inherit'}} to="/user" > Login</Link></Button>
             </div>
         :
             <Container component="main" maxWidth="xs">
@@ -155,7 +144,8 @@ function SignUp() {
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
             </Container>
-        }</div>
+        }
+        </div>
     )
 }
 

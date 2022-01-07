@@ -1,6 +1,6 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardMedia, Typography, Box, IconButton, ListItem, Grid, Stack } from '@mui/material'
+import { useEffect } from 'react'
+import { Card, CardContent, CardMedia, Typography, Box, IconButton, Stack } from '@mui/material'
 import { Add, Remove } from '@mui/icons-material';
 
 function CartItem(props) {

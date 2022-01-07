@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db_connection.php';
+$conn = startConnection();
 
 // Retrieve the contents of the php input request in the url
 $rest_json = file_get_contents("php://input");
@@ -15,6 +16,12 @@ if(isset($_POST['function']) && !empty($_POST['function'])){
         $email = $_POST['form']['email'];
         $password = $_POST['form']['password'];
     };
+    if(isset($_POST['account'])){
+        $userID = $_POST['account']['userid'];
+    };
+    if(isset($_POST['billing'])){
+        $billing = $_POST['billing'];
+    };
 
     switch($functionCall) {
         case 'login_user':
@@ -25,6 +32,12 @@ if(isset($_POST['function']) && !empty($_POST['function'])){
             break;
         case 'logout_user':
             logout_user($conn);
+            break;
+        case 'get_address':
+            get_address($conn, $userID);
+            break;
+        case 'submit_address':
+            submit_address($conn, $userID, $billing);
             break;
     }
 }
@@ -83,4 +96,41 @@ function logout_user($conn){
 
     echo json_encode($_SESSION);
 }
+
+function get_address($conn, $userID){
+    $query = "SELECT * FROM `user_billing_infos` WHERE `users_id` = $userID";
+    $result = @mysqli_query($conn, $query);
+    $json = mysqli_fetch_assoc($result);
+                              // products array => Sub array in Data
+    echo json_encode($json);
+}
+
+function submit_address($conn, $userID, $billing){
+
+    $query = "INSERT INTO `user_billing_infos`(`first_name`, `last_name`, `address1`, `address2`, `city`, `state`, `postal_code`, `country`, `users_id`) 
+    VALUES (
+        '". $billing['first_name'] ."',
+        '". $billing['last_name'] ."',
+        '". $billing['address1'] ."',
+        '". $billing['address2'] ."',
+        '". $billing['city'] ."',
+        '". $billing['state'] ."',
+        '". $billing['postal_code'] ."',
+        '". $billing['country'] ."',
+        $userID
+    )";
+
+    $result = @mysqli_query($conn, $query);
+
+    if($result){
+        echo json_encode(array("sent" => true));
+        closeConnection($conn);
+    }
+    else{
+        echo json_encode(array("sent" => false));
+        mysqli_rollback($conn);
+    };
+
+}
+
 ?>

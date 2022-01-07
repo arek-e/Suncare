@@ -1,27 +1,14 @@
 
-import { Box, Grid, Paper, Typography, Avatar, TextField, FormControlLabel, Checkbox, Button } from '@mui/material';
+import { Box, Grid, Paper, Typography, Avatar, TextField, Button } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import React from 'react'
 import {useState, useContext} from 'react'
 import {Link} from "react-router-dom";
-import { UserContext } from './UserContext';
+import { UserContext } from '../UserContext';
+import Copyright from '../Copyright';
 
 const axios = require('axios').default;
-const API_PATH = 'http://localhost/suncare/src/api/login.php'
-
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" to="/">
-            Suncare
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-        </Typography>
-    );
-}
+const API_PATH = 'http://localhost/suncare/src/api/login_func.php'
 
 function Login() {
     const {account, setAccount} = useContext(UserContext);
@@ -31,7 +18,7 @@ function Login() {
         password: '',
     });
 
-    const [correcPwd, setCorrectPwd] = useState();
+    //const [correcPwd, setCorrectPwd] = useState();
 
     const updateForm = event => {
         setForm({

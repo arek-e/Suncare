@@ -1,5 +1,6 @@
 <?php
 require_once 'db_connection.php';
+$conn = startConnection();
 
 //get content from front-end, signUp.js
 $content = file_get_contents("php://input");
@@ -25,6 +26,7 @@ if(isset($_POST)){
     
     if($result){
         echo json_encode(array("sent" => true));
+        closeConnection($conn);
     }
     else{
         echo json_encode(array("sent" => false));
