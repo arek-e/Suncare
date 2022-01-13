@@ -60,7 +60,11 @@ export default function Products() {
 
     }, [selectedCategory])
 
-
+    const [currentCart, setCurrentCart] = useState([])
+    const handleUpdateCart = (event) => {
+        setCurrentCart(event);
+        console.log("Current cart", event)
+    }
 
     return (    
 
@@ -68,7 +72,7 @@ export default function Products() {
 
             {products.map(product => (<Link key={product.id} to={'item/' + product.id} />))}
             <Grid item xs={12} sx={{ zIndex: 101}}>
-                <HeaderMUI showCart={true} func={pullCartStatus}/>
+                <HeaderMUI currentCart={currentCart} showCart={true} func={pullCartStatus}/>
             </Grid>
             <Grid item xs="auto">
                 <Box>
@@ -90,7 +94,7 @@ export default function Products() {
                     </Grid>
                 </Stack>
             </Grid>
-            <ShoppingCart cartProduct={cartProduct} cartStatus={cart}/>
+            <ShoppingCart cartUpdated={handleUpdateCart} cartProduct={cartProduct} cartStatus={cart}/>
         </Grid>
     )
 }

@@ -25,23 +25,26 @@ function ShoppingCart(props) {
                 res.data.cart.map(item => (
                     axios.post(API_PATH, {function: "get_product", prodID: item.products_id})
                     .then( res2 => {
-                        setmyArray(prevarray => [...prevarray, {product: res2.data, quantity: parseInt(item.amount)}])
+                        setmyArray(prevarray => [...prevarray, {product: res2.data, quantity: parseInt(item.amount)}]);
                     })
                 ))
             });
+ 
         }
     }, [account])
 
     // Use effect - When a new product is added to cart from products page
     // send it to the addToCart function
     useEffect(() => {
+        props.cartUpdated(myArray);
+    }, [myArray])
+
+    useEffect(() => {
         return addToCart(props.cartProduct);
     }, [props.cartProduct])
 
     // When a new product is received check if it is already in cart to increase quanity else add it to cart.
-    const  addToCart = (cartItem) => {
-
-        
+    const  addToCart = (cartItem) => {   
         if(account){
             let userID = parseInt(account.userid)
             const objIndex = myArray.findIndex((obj => obj.product.id === cartItem.id));
@@ -71,12 +74,72 @@ function ShoppingCart(props) {
                 }).then( res => {
                     console.log("New cart item:" ,res.data.sent)
                 });  
+
             }
         }else{
             console.log("Log in first to add to cart")
         }
     }
 
+    const updateCart = (cartItem, quantity) => {
+        if(account){
+            let userID = parseInt(account.userid);
+
+            if(cartItem){
+                let index =  myArray.findIndex(item => item.product.id === cartItem.id);
+                myArray[index].quantity = quantity;
+                if( myArray[index].quantity === 0){
+                    //console.log(myArray.filter(item => item.product.id !== cartItem.id && Object.keys(item.product).length > 0));
+                    setmyArray(myArray.filter(item => item.product.id !== cartItem.id && Object.keys(item.product).length > 0));
+                    axios.post(API_PATH, {
+                        function: "remove_from_cart",
+                        item: parseInt(cartItem.id)
+                    }).then( res => {
+                        console.log("Removed cart item:" ,res.data.sent)
+                    }); 
+                }
+                else{
+                    setmyArray(prevarray => [...prevarray]);
+                    axios.post(API_PATH, {
+                        function: "update_cart",
+                        userID: userID,
+                        item: parseInt(cartItem.id),
+                        price: parseFloat(cartItem.price),
+                        amount: myArray[index].quantity
+                    }).then( res => {
+                        console.log("Updated cart item:" ,res.data.sent)
+                    });  
+                }
+            }
+        }
+
+    }
+
+    const handleClearCart = () => {
+        if(account){
+            let userID = parseInt(account.userid)
+            axios.post(API_PATH, {function: "clear_cart", userID: userID})
+            .then(res => {
+                console.log(res.data);
+
+                if(res.data){
+                    setmyArray([]);
+                    axios.post(API_PATH, {function: "get_cart",userID: userID})
+                    .then( res => {
+                        console.log("Getting cart");
+                        res.data.cart.map(item => (
+                            axios.post(API_PATH, {function: "get_product", prodID: item.products_id})
+                            .then( res2 => {
+                                setmyArray(prevarray => [...prevarray, {product: res2.data, quantity: parseInt(item.amount)}])
+                            })
+                        ))
+                    });
+                    props.cartUpdated(myArray);
+                }
+            })
+
+        }
+    }
     
 
     return (
@@ -90,12 +153,12 @@ function ShoppingCart(props) {
                         <List>
                             {myArray.filter(item => Object.keys(item.product).length > 0).map(item => (
                                 <ListItem key={item.product.id}>
-                                    <CartItem item={item} />
+                                    <CartItem updateCart={updateCart} item={item} />
                                 </ListItem>
                             ))}
                         </List>
                         <Grid container item md={12} sx={{ justifyContent: 'center'}}>
-                            <Button variant="contained">Clear cart</Button>
+                            <Button variant="contained" onClick={handleClearCart}>Clear cart</Button>
                             <Button variant="contained">  
                                 <Link to="/checkout" style={{ textDecoration: 'none', color: 'inherit'}}>
                                     Checkout

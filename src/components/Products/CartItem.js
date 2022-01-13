@@ -1,14 +1,33 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Card, CardContent, CardMedia, Typography, Box, IconButton, Stack } from '@mui/material'
 import { Add, Remove } from '@mui/icons-material';
 
 function CartItem(props) {
 
-    useEffect(() => {
-        console.log(props.item)
+    const [quantity, setQuantity] = useState(0)
+    const [item, setItem] = useState({})
 
-    }, [props.item])
+    useEffect(() => {
+        //console.log(props.item.quantity);
+        setQuantity(props.item.quantity);
+        setItem(props.item);
+    }, [])
+
+    const handleAddItem = () => {
+        setQuantity(quantity + 1);
+        props.updateCart(item.product, quantity);
+    }
+
+    const handleRemoveItem = () => {
+        setQuantity(quantity - 1);
+        props.updateCart(item.product, quantity);
+    }
+
+    useEffect(() => {
+        props.updateCart(item.product, quantity);
+    }, [quantity])
+
     return (
             <Card sx={{ display: 'flex' , width: 450 , height: 100}}>
                 <CardMedia
@@ -27,13 +46,13 @@ function CartItem(props) {
                 </CardContent>
                 <Box sx={{paddingTop: 4}}>
                     <Stack direction="row">
-                        <IconButton>
+                        <IconButton onClick={handleAddItem}>
                             <Add/>
                         </IconButton>
                         <Box sx={{paddingTop: 1}}>                        
-                            <Typography>{props.item.quantity}</Typography>
+                            <Typography>{quantity}</Typography>
                         </Box>
-                        <IconButton>
+                        <IconButton onClick={handleRemoveItem}>
                             <Remove/>
                         </IconButton>
                     </Stack>

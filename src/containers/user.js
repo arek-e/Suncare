@@ -12,7 +12,16 @@ const API_PATH = 'http://localhost/suncare/src/api/login_func.php'
 function UserPage(props) {
     const {account, setAccount} = useContext(UserContext)
     const [admin, setAdmin] = useState(0)
-    const [billing, setBilling] = useState( {})
+    const [billing, setBilling] = useState( {
+        first_name:'',
+        last_name:'',
+        address1:'',
+        address2:'',
+        city:'',
+        state:'',
+        postal_code:'',
+        country:'',
+    })
 
     useEffect(() => {
         setAccount(account);
@@ -21,7 +30,10 @@ function UserPage(props) {
         axios.post(API_PATH, {function: "get_address", account: account})
         .then(res => {
             console.log(res.data);
-            setBilling(res.data);
+            if(res.data){
+                setBilling(res.data);
+            }
+
         });
 
     }, [account])
@@ -150,81 +162,81 @@ function UserPage(props) {
                                             </Grid>
                                             <Paper sx={{ width:1, p: 2, display: 'flex', flexDirection: 'column' }}>
                                                 <Grid container item spacing={2} xs={12}>
-                                                <Grid item xs={6}  md={6}>
-                                <TextField
-                                    fullWidth
-                                    name="first_name"
-                                    label="First Name "
-                                    value={billing.first_name || ''}
-                                    onChange={handleBillingChange}
-                                />
-                            </Grid>
-                            <Grid item xs={6}  md={6}>
-                                <TextField
-                                    fullWidth
-                                    name="last_name"
-                                    label="Last Name "
-                                    value={billing.last_name || ''}
-                                    onChange={handleBillingChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    fullWidth
-                                    name="address1"
-                                    label="Address 1 "
-                                    value={billing.address1 || ''}
-                                    onChange={handleBillingChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    fullWidth
-                                    name="address2"
-                                    label="Address 2 "
-                                    value={billing.address2 || ''}
-                                    onChange={handleBillingChange}
-                                />
-                            </Grid>
-                            <Grid item xs={6} >
-                                <TextField
-                                    fullWidth
-                                    name="city"
-                                    label="City "
-                                    value={billing.city || ''}
-                                    onChange={handleBillingChange}
-                                />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <TextField
-                                    fullWidth
-                                    name="state"
-                                    label="State "
-                                    value={billing.state || ''}
-                                    onChange={handleBillingChange}
-                                />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <TextField
-                                    fullWidth
-                                    name="postal_code"
-                                    label="Postal Code "
-                                    value={billing.postal_code || ''}
-                                    onChange={handleBillingChange}
-                                />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <TextField
-                                    fullWidth
-                                    name="country"
-                                    label="Country "
-                                    value={billing.country || ''}
-                                    onChange={handleBillingChange}
-                                />
-                            </Grid>
-                                                        <Grid item xs={12}>
-                                                            <Button variant="contained" onClick={handleAddressSubmit}>Submit address</Button>
-                                                        </Grid>
+                                                     <Grid item xs={6}  md={6}>
+                                                        <TextField
+                                                            fullWidth
+                                                            name="first_name"
+                                                            label="First Name "
+                                                            value={billing.first_name}
+                                                            onChange={handleBillingChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}  md={6}>
+                                                        <TextField
+                                                            fullWidth
+                                                            name="last_name"
+                                                            label="Last Name "
+                                                            value={billing.last_name || ''}
+                                                            onChange={handleBillingChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <TextField
+                                                            fullWidth
+                                                            name="address1"
+                                                            label="Address 1 "
+                                                            value={billing.address1 || ''}
+                                                            onChange={handleBillingChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <TextField
+                                                            fullWidth
+                                                            name="address2"
+                                                            label="Address 2 "
+                                                            value={billing.address2 || ''}
+                                                            onChange={handleBillingChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} >
+                                                        <TextField
+                                                            fullWidth
+                                                            name="city"
+                                                            label="City "
+                                                            value={billing.city || ''}
+                                                            onChange={handleBillingChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                            fullWidth
+                                                            name="state"
+                                                            label="State "
+                                                            value={billing.state || ''}
+                                                            onChange={handleBillingChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                            fullWidth
+                                                            name="postal_code"
+                                                            label="Postal Code "
+                                                            value={billing.postal_code || ''}
+                                                            onChange={handleBillingChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                            fullWidth
+                                                            name="country"
+                                                            label="Country "
+                                                            value={billing.country || ''}
+                                                            onChange={handleBillingChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <Button variant="contained" onClick={handleAddressSubmit}>Submit address</Button>
+                                                    </Grid>
                                                 </Grid>
                                             </Paper>
                                         </Grid>

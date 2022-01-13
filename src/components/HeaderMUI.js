@@ -65,39 +65,30 @@ function HeaderMUI(props) {
         }
     }
 
-    const [cartItems, setCartItems] = useState([]);
+
     const [cartItemsCount, setCartCount] = useState(0)
+
     useEffect(() => {
-        if(account){
-            let userID = parseInt(account.userid)
-            axios.post(API_PATH, {function: "get_cart", userID: userID})
-            .then( res => {
-                console.log("Getting cart");
-                res.data.cart.map(item => (
-                    axios.post(API_PATH, {function: "get_product", prodID: item.products_id})
-                    .then( res2 => {
-                        setCartItems(prevarray => [...prevarray, {product: res2.data, quantity: parseInt(item.amount)}])
-                    })
-                ))
-            });
+        // console.log("Cart item count")
+        if(props.currentCart){
+            return calculateAmountInCart(props.currentCart);
         }
-    }, [account])
 
-    useEffect(() => {
-        console.log("Cart item count")
-        return calculateAmountInCart()
-    }, [cartItems])
+    }, [props.currentCart])
 
-    const calculateAmountInCart = () => {
+    const calculateAmountInCart = (items) => {
         //console.log("List length: ", reviews.length)
-        if(cartItems.length > 0)
+        if(items.length > 0)
         {
-            const cartItemCounts = cartItems.map((cartItem) => parseInt(cartItem.quantity))
+            const cartItemCounts = items.filter(item => Object.keys(item.product).length > 0).map((item) => parseInt(item.quantity))
             
             const cartCount = cartItemCounts.reduce((partial_rating, a) => partial_rating + a, 0);
-            console.log(cartItemCounts)
-            console.log(cartCount)
+            // console.log(cartItemCounts)
+            // console.log(cartCount)
             setCartCount(cartCount)
+        }
+        else{
+            setCartCount(0)
         }
     }
     return (

@@ -68,6 +68,12 @@ if(isset($_POST['function']) && !empty($_POST['function'])){
         case 'update_cart':
             update_cart($conn, $userID, $item, $price, $amount);
             break;
+        case 'clear_cart':
+            clear_cart($conn, $userID);
+            break;
+        case 'remove_from_cart':
+            remove_from_cart($conn, $item);
+            break;
         case 'place_order':
             place_order($conn, $orderItems, $userID, $billingAddress);
             break;
@@ -304,6 +310,30 @@ function submit_review($conn, $review, $productID, $userID)
 
 function clear_cart($conn, $userID){
 
+    $query = "DELETE FROM `cart` WHERE `users_id` = $userID";     
+    
+    $update = mysqli_query($conn, $query);
+    if($update){
+        echo json_encode(array("sent" => true));
+        closeConnection($conn);
+    }
+    else{
+        mysqli_rollback($conn);
+    }
+}
+
+function remove_from_cart($conn, $item)
+{
+    $query = "DELETE FROM `cart` WHERE `products_id` = $item";     
+    
+    $update = mysqli_query($conn, $query);
+    if($update){
+        echo json_encode(array("sent" => true));
+        closeConnection($conn);
+    }
+    else{
+        mysqli_rollback($conn);
+    }
 }
 
 ?>
